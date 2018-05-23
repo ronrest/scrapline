@@ -31,7 +31,7 @@ class TelegramClient(object):
             credentials:   (str | dict)
                 either a dictionary with credentials, or a filepath to a json
                 file that can be loaded as a dictionary.
-            
+
         Optional Args:
             filter: (list of str | None)(default=None)
                 subset of groups/chats to monitor. Set to None to monitor all
