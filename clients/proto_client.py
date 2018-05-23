@@ -17,11 +17,13 @@ class Proto_Client(object):
     def is_connected(self):
         assert False, "TODO: `is_connected` not implemented yet"
 
-    def parse_credentials(self, credentials):
+    def parse_credentials(self, credentials=None):
         """ If credentials is already a dictionary, then it returns it
             unmodified, otherwise if credentials is a path to a json file,
             then load as a dict
         """
+        if credentials is None:
+            credentials = self.credentials
         if isinstance(credentials, str):
             logger.debug("- opening credentials file: {}".format(credentials))
             with open(credentials, mode="r") as fileobj:
