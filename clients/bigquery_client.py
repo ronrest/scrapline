@@ -103,6 +103,15 @@ class BQ_Client(object):
                                        table_id=self.table_id,
                                        project_id=self.google_project_id)
 
+    def connect_to_table(self, table_id=None):
+        if table_id is not None:
+            self.table_id = table_id
+
+        self.table = get_bigquery_table(self.client,
+                                    dataset_id=self.dataset_id,
+                                    table_id=self.table_id,
+                                    project_id=self.google_project_id)
+
 
     def store(self, data):
         """ given a dictionary object, it pushes the data to database """
