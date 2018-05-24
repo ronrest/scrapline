@@ -60,6 +60,8 @@ def get_bigquery_table(client, dataset_id, table_id, project_id=None):
         raise
 
 
+
+
 # ##############################################################################
 #                                     DB_CLIENT
 # ##############################################################################
@@ -87,12 +89,20 @@ class BQ_Client(object):
         # For bigquery it takes the filepath to a json file directly
         self.credentials = credentials
 
-    def connect(self):
+    def connect(self, to_table=True):
+        """
+        to_table:   (bool) should it connect to table as well?
+        """
         self.client = connect_to_bigquery(credentials=self.credentials,
                                        gcp_project_id=self.google_project_id)
-        self.table = get_bigquery_table(self.client, dataset_id=self.dataset_id,
-                                   table_id=self.table_id,
-                                   project_id=self.google_project_id)
+
+        if to_table:
+            # hacky if statement to make it backwards compatible
+            self.table = get_bigquery_table(self.client,
+                                        dataset_id=self.dataset_id,
+                                       table_id=self.table_id,
+                                       project_id=self.google_project_id)
+
 
     def store(self, data):
         """ given a dictionary object, it pushes the data to database """
