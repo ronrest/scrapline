@@ -112,6 +112,15 @@ class BQ_Client(object):
                                     table_id=self.table_id,
                                     project_id=self.google_project_id)
 
+    def create_table(self, table_id, schema):
+        """ Creates a new table in Big Query"""
+        dataset_ref = self.client.dataset(self.dataset_id)
+        table_ref = dataset_ref.table(table_id)
+        table = bigquery.Table(table_ref, schema=schema)
+        table = self.client.create_table(table)
+
+        assert table.table_id == table_id, "Something went wrong"
+        return True
 
     def store(self, data):
         """ given a dictionary object, it pushes the data to database """
