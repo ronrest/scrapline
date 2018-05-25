@@ -12,10 +12,16 @@ from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.types import PeerUser, PeerChat, PeerChannel
+import telethon.tl.types as telethon_types
+
 
 from datetime import datetime
 from support.debug import pretty_error_str
 logger = logging.getLogger('myscraper.modules') # my scraper logs
+
+# from scraper_pipeline.item_wrappers.telethon_group import TelethonGroupInfo
+from .. item_wrappers.telethon_group import TelethonGroupInfo
+
 
 QUEUE_TERMINATING_VALUE = "zzz this is a killer"
 
@@ -25,7 +31,7 @@ SERVER_DOWN_DELAY = 10  # when receive some server side error
 
 
 class TelegramClient(object):
-    def __init__(self, credentials, n_readers, filter=None, **kwargs):
+    def __init__(self, credentials, n_readers=1, filter=None, **kwargs):
         """
         Args:
             credentials:   (str | dict)
@@ -134,6 +140,22 @@ class TelegramClient(object):
         name = getattr(entity, "username", getattr(entity, "title", None))
         name = name if name is not None else telethon.utils.get_display_name(entity)
         return name
+
+    def get_group_info(self, id):
+        """ Returns a dictionary of information of a group from an id, name,
+            or url
+        """
+        # TODO: maybe create a more generic entity version, that can also
+        #       extract user information.
+        # assert url.startswith("https://t.me/"), "Wrong url"
+        entity = self.client.get_entity(id)
+        assert isinstance(entity, (telethon_types.Channel, telethon_types.Chat)), "{} cannot be interpreted as a group/channel/chat".format(id)
+
+        # EXTRACT INFO
+        url = id if id.startswith("https://t.me/") else None
+
+        info = TelethonGroupInfo(entity, url)
+        return info.asdict()
 
     def join_group(self, id):
         """ Given a group id it joins that group """
