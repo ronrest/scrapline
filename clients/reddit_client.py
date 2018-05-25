@@ -2,7 +2,7 @@ import praw
 from . proto_client import Proto_Client, logger
 
 class RedditClient(Proto_Client):
-    def __init__(self, credentials, subredits=None):
+    def __init__(self, credentials, subreddits=None):
         """
         Args:
             credentials:    (str | dict)
@@ -31,5 +31,5 @@ class RedditClient(Proto_Client):
     def start(self):
         logger.info("Starting stream of comments from reddit")
         # subreddits = ["funny","science"]
-        self.subreddit_object = client.reddit.subreddit("+".join(self.subreddits))
-        self.comments_stream = subreddit_object.stream.comments()
+        self.subreddit_object = self.reddit.subreddit("+".join(self.subreddits))
+        self.comments_stream = self.subreddit_object.stream.comments()
