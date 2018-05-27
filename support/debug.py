@@ -13,6 +13,9 @@ import logging
 logger = logging.getLogger('myscraper')
 # from . threads import get_threads_health, get_thread_name
 # from . misc import str2file, timenow_str, timenow
+
+id2sig = {sig.value:sig.name for sig in list(signal.Signals)}
+
 def pretty_error_str(msg="", dec=True):
     error_type = sys.exc_info()[0]
     error_object = sys.exc_info()[1]
@@ -67,3 +70,12 @@ def configure_logging(logging_level="info", file=None, date_format="%Y-%m-%d %H:
     logger.setLevel(logging_level_map.get(logging_level.lower()))
     return logger
 
+
+sigmap = {sig.name:sig for sig in signal.Signals}
+def sig_handler(sig_id=None, frame=None):
+    print("OHHH SHIT! GOT A SYSTEM SIGNAL {}".format(sig_id))
+    sys.exit(sig_id)
+
+def handle_sys_signals(sigs):
+    for sig in sigs:
+        signal.signal(sigmap[sig], sig_handler)
