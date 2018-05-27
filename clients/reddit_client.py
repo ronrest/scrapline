@@ -1,4 +1,5 @@
 import praw
+import threading
 from . proto_client import Proto_Client, logger
 
 class RedditClient(Proto_Client):
@@ -13,6 +14,7 @@ class RedditClient(Proto_Client):
         Proto_Client.__init__(self, credentials)
         self.credentials = self.parse_credentials()
         self.subreddits = subreddits
+        self.item_lock = threading.Lock()
 
     def connect(self):
         logger.info("Connecting to reddit client")
@@ -20,13 +22,14 @@ class RedditClient(Proto_Client):
         self.reddit.read_only = True # Enable read only mode
         logger.debug("connected succesfully to reddit client")
 
-    def get_item(self):
-        # Do threadlocking to get message
-        # messages are in an iterator interface, which can be extracted using
-        # next(x) applied to the `self.comments_stream` object
-        #
-        # item = next(self.comments_stream)
-        assert False, "`get_item()` not implemented yet"
+    def get_item(self, timeout=None):
+        # TODO: See if there is a way to do timeout on this stream generator
+        if timeout is not None:
+            assert False, "Timeout in reddit_client.get_item() is not implemented yet"
+
+        with self.item_lock:
+            item = next(self.comments_stream)
+        return item
 
     def start(self):
         logger.info("Starting stream of comments from reddit")
