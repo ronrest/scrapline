@@ -32,3 +32,9 @@ def pretty_error_str(msg="", dec=True):
     return template.format(dec=dec, msg=msg, et=error_type, es=error_summary, tb=traceback_str)
 
 
+def kvlines(d, keys=None):
+    if keys is None:
+        keys = d.keys()
+    template = "{k} = {v}"
+    return "\n".join([template.format(k=key, v=d[key]) for key in keys])
+
