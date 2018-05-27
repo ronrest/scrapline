@@ -11,8 +11,8 @@ logger = logging.getLogger('myscraper.modules')
 
 # from support.debug import pretty_error_str
 # from support.threads import ProtoWorkerThread
-from support.threads import WorkerGroup
-from support.misc import now_string
+from . workers import WorkerGroup
+from .. support.datetimefuncs import now_string
 
 # EXCEPTIONS
 # connection to database error
@@ -23,8 +23,6 @@ from support.misc import now_string
 #                                 SETTINGS
 # ##############################################################################
 DEFAULT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f UTC"
-
-
 
 def str2file(s, f, mode="w"):
     """ write a string to file"""
@@ -60,8 +58,6 @@ class ProtoSection(object):
         self._n_workers = n_workers
         self.workers = WorkerGroup(name="Workers")
         self.initialize_worker_threads()
-
-
 
     def initialize_worker_threads(self):
         assert False, "`initialize_worker_threads` needs to be implemented"
