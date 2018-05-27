@@ -45,6 +45,7 @@ class ProtoSection(object):
         self.num_filtered = 0       # number of undesired items seen
 
         self.date_format = kwargs.get("date_format", DEFAULT_DATE_FORMAT)
+        self.tz = "UTC"
         self.print_lock = threading.Lock()  # lock for printing
 
         # LOGS AND OUTPUT FILES
