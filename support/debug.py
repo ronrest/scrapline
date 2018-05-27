@@ -38,3 +38,6 @@ def kvlines(d, keys=None):
     template = "{k} = {v}"
     return "\n".join([template.format(k=key, v=d[key]) for key in keys])
 
+def thread_status_lines(thread_statuses):
+    return "\n".join(["{} = {}".format(t["name"], t["status"]) for t in thread_statuses])
+
