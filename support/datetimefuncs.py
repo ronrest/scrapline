@@ -23,7 +23,7 @@ def datetime2str(dt, format="%Y-%m-%d %H:%M:%S", tz="Australia/Melbourne"):
     return dt.strftime(format)
 
 # TODO: check that timestamp2str is returning time in desired timezone correctly
-def timestamp2str(t, tz="Australia/Melbourne", format="%Y-%m-%d %H:%M:%S.f %Z"):
+def timestamp2str(t, tz="Australia/Melbourne", format="%Y-%m-%d %H:%M:%S.%f %Z"):
     tzinfo = dateutil.tz.gettz(tz)
     assert tzinfo is not None, "Could not get timezone data"
     return datetime.datetime.fromtimestamp(t, tz=tzinfo).strftime(format)
@@ -50,7 +50,7 @@ def now_timestamp():
     assert tzinfo is not None, "Could not get timezone data"
     return datetime.datetime.now(tz=tzinfo).timestamp()
 
-def now_string(format="%Y-%m-%d %H:%M:%S", tz="Australia/Melbourne"):
+def now_string(format="%Y-%m-%dT%H:%M:%S", tz="Australia/Melbourne"):
     tzinfo = dateutil.tz.gettz(tz)
     assert tzinfo is not None, "Could not get timezone data"
     return datetime.datetime.now(tz=tzinfo).strftime(format)
