@@ -31,7 +31,7 @@ def str2file(s, f, mode="w"):
 
 
 class ProtoSection(object):
-    def __init__(self, client=None, input_q=None, n_workers=1, worker_prefix="StorerThread", **kwargs):
+    def __init__(self, client=None, input_q=None, n_workers=1, **kwargs):
         self.client = client
         self.input_q = input_q if input_q is not None else queue.Queue()
 
@@ -55,7 +55,7 @@ class ProtoSection(object):
         self.last_item = None
 
         # Process workers group and threads
-        self.worker_prefix = worker_prefix
+        self.worker_prefix = kwargs.get("worker_prefix", "Worker_Thread")
         self._n_workers = n_workers
         self.workers = WorkerGroup(name="Workers")
         self.initialize_worker_threads()
@@ -142,7 +142,6 @@ class ProtoSection(object):
 
     def single_work_step(self):
         assert False, "`single_work_step()` must be implemented"
-
 
     @property
     def health_dict(self):
