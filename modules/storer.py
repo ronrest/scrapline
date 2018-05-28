@@ -8,12 +8,16 @@ import threading
 import logging
 logger = logging.getLogger('myscraper.storer')
 
-from support.debug import pretty_error_str
-from support.threads import ProtoWorkerThread
-from support.threads import WorkerGroup
+# from .. support.debug import pretty_error_str
+# from .. support.threads import ProtoWorkerThread
+# from .. support.threads import WorkerGroup
 # from support.misc import now_string
 
 from . proto_section import ProtoSection
+from . workers import ProtoWorkerThread
+from .. support.datetimefuncs import timestamp2str, now_string
+from .. support.debug import pretty_error_str
+
 
 # EXCEPTIONS
 # connection to database error
