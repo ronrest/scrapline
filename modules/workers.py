@@ -114,7 +114,7 @@ class WorkerGroup(object):
                 are actually stopped?
         """
         if i is None:
-            logger.info("STOPPING all storer worker threads in {}".format(self.name))
+            logger.info("STOPPING all worker threads in {}".format(self.name))
             for worker in self._workers:
                 worker.stop()
             if lock:
@@ -123,7 +123,12 @@ class WorkerGroup(object):
                 logger.debug("STOPPED all worker threads in {}".format(self.name))
 
         else:
-            assert False, "Stopping a specific isolated thread not implemented yet"
+            worker = self._workers[i]
+            logger.info("STOPPING worker thread {}".format(worker.name))
+            worker.stop()
+            if lock:
+                worker.join()
+            logger.debug("STOPPED worker thread {}".format(worker.name))
 
 
     def nullify(self, i=None):
