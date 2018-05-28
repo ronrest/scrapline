@@ -15,15 +15,18 @@ class RedditClient(Proto_Client):
         self.credentials = self.parse_credentials()
         self.subreddits = subreddits
         self.item_lock = threading.Lock()
+        self.reconnect_lock = threading.Lock()
 
     def connect(self):
         logger.info("Connecting to reddit client")
         self.reddit = praw.Reddit(**self.credentials)
         self.reddit.read_only = True # Enable read only mode
+        self._connection_status = "connected"
         logger.debug("connected succesfully to reddit client")
 
     def get_item(self, timeout=None):
         # TODO: See if there is a way to do timeout on this stream generator
+        # TODO: Catch
         if timeout is not None:
             assert False, "Timeout in reddit_client.get_item() is not implemented yet"
 
