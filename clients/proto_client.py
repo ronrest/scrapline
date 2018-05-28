@@ -12,10 +12,16 @@ class Proto_Client(object):
     """
     def __init__(self, credentials):
         self.credentials = credentials
+        self._connection_status = None
+
+    @property
+    def connection_status(self):
+        return self._connection_status
 
     @property
     def is_connected(self):
-        assert False, "TODO: `is_connected` not implemented yet"
+        assert False, "is_connected is not implemeted yet"
+        # return self._connected
 
     def parse_credentials(self, credentials=None):
         """ If credentials is already a dictionary, then it returns it
