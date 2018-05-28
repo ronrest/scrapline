@@ -8,15 +8,14 @@ Big Query CLient
 # status
 import sys
 import logging
-logger = logging.getLogger('myscraper.db_client')
 # import json
 # import time
 
 from google.cloud import bigquery
 # bigquery.__version__
 
-from support.debug import pretty_error_str
-
+from .. support.debug import pretty_error_str
+logger = logging.getLogger('scraper_pipeline.bq_client')
 
 # TODO: there is no need to pass logger as an argument. Can create global logger with same namespace.
 
