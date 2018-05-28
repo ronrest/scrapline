@@ -61,3 +61,26 @@ def get_threads_health(threads):
             summaries.append({"name":thread.getName(), "status":status})
     return summaries
 
+# class LockedIterator(object):
+#     """ A thread safe iterator that wraps around an existing iterator """
+#     def __init__(self, it):
+#         self.lock = threading.Lock()
+#         self.it = iter(it)
+#
+#     def __iter__(self):
+#         return  self
+#
+#     def qsize(self):
+#         return None
+#
+#     def get(self):
+#         return next(self)
+#
+#     def next(self):
+#         with self.lock:
+#             return self.it.next()
+#
+#     def __next__(self):
+#         with self.lock:
+#             return self.it.__next__()
+#
