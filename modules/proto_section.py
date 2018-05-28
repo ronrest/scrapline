@@ -161,7 +161,7 @@ class ProtoSection(object):
         health["output_q"] = self.output_q.qsize()
         health["num_items"] = self.num_items
         health["num_filtered"] = self.num_filtered
-        health["client_connected"] = "NA"  # self.client.is_connected
+        health["client_connection_status"] = getattr(self.client, "connection_status", None)
         # client health?
         return health
 
