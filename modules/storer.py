@@ -6,7 +6,7 @@ import json
 import queue
 import threading
 import logging
-logger = logging.getLogger('myscraper.storer')
+logger = logging.getLogger('scraper_pipeline.storer')
 
 # from .. support.debug import pretty_error_str
 # from .. support.threads import ProtoWorkerThread
