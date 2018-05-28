@@ -66,7 +66,6 @@ class MyWorker(ProtoWorkerThread):
 # ##############################################################################
 class Storer(ProtoSection):
     def __init__(self, client, input_q, n_workers=1, worker_prefix="StorerThread", **kwargs):
-        ProtoSection.__init__(self, client=client, input_q=input_q, n_workers=n_workers, worker_prefix=worker_prefix, **kwargs)
 
         # self.workers = WorkerGroup(name="StorerWorkers")
 
@@ -77,6 +76,7 @@ class Storer(ProtoSection):
         self.monitor_file = kwargs.get("monitor_file", "storer_monitor.log")
         self.health_file = kwargs.get("health_file", "health_storer.json")
         self.last_item = None
+        ProtoSection.__init__(self, client=client, input_q=input_q, n_workers=n_workers, worker_prefix=worker_prefix, **kwargs)
 
     def initialize_worker_threads(self):
         self.workers.clear()
