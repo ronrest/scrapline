@@ -54,7 +54,18 @@ def kvlines(d, keys=None):
 def thread_status_lines(thread_statuses):
     return "\n".join(["{} = {}".format(t["name"], t["status"]) for t in thread_statuses])
 
-def configure_logging(logging_level="info", file=None, date_format="%Y-%m-%d %H:%M:%S", log_tz="Australia/Melbourne", telegram_log_level="warning"):
+# def unexpected_termination_procedure(msg, health_file="health.log", log_tz="Australia/Melbourne"):
+#     error_msg = pretty_error_str(msg)
+#     logger.critical(error_msg)
+#     # Update health file
+#     full_msg = "NO HEALTH INFORMATION\n"
+#     full_msg += "PROGRAM CRASHED UNEXPECTEDLY\n"
+#     full_msg += timenow_str(format="%Y-%m-%d %H:%M:%S %Z", tz=log_tz)
+#     full_msg += "\n\n"+ error_msg
+#     str2file(full_msg, f=health_file, mode="w")
+#     raise
+
+def configure_logging(logger_level="info", logger_name="myscraper", file=None, library_levels={}, date_format="%Y-%m-%d %H:%M:%S", log_tz="Australia/Melbourne"):
     # TODO: use key value mappings to map log level for different libraries.
     #       Currenlty hardcoding telergam as the only external library
     #  TODO: Take argument for name of current library.
@@ -67,9 +78,11 @@ def configure_logging(logging_level="info", file=None, date_format="%Y-%m-%d %H:
     # Set the timezone of the logging datetime stamp
     logging.Formatter.converter = lambda *args: datetime.now(tz=dateutil.tz.gettz(log_tz)).timetuple()
 
-    logging.getLogger('telethon').setLevel(level=logging_level_map[telegram_log_level]) # telegram logs
-    logger = logging.getLogger('myscraper') # my scraper logs
-    logger.setLevel(logging_level_map.get(logging_level.lower()))
+    for library, level in library_levels.items():
+        logging.getLogger(library).setLevel(level=logging_level_map[level])
+    # logging.getLogger('scraper_pipeline').setLevel(level=logging_level_map[telegram_log_level]) # telegram logs
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(logging_level_map.get(logger_level.lower()))
     return logger
 
 def sig_handler(sig_id=None, frame=None):
