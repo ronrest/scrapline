@@ -115,6 +115,12 @@ class BQ_Client(object):
                                     table_id=table_id,
                                     project_id=project_id)
 
+    def get_table(self, table_id, dataset_id, project_id):
+        """ Get ANY table on bigquery, even those of other projects """
+        return get_bigquery_table(self.client,
+                                    dataset_id=dataset_id,
+                                    table_id=table_id,
+                                    project_id=project_id)
 
     def create_table(self, table_id, schema):
         """ Creates a new table in Big Query"""
