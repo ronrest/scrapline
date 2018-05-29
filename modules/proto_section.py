@@ -7,7 +7,7 @@ import queue
 import time
 import threading
 import logging
-logger = logging.getLogger('myscraper.modules')
+logger = logging.getLogger('scraper_pipeline.modules')
 
 # from support.debug import pretty_error_str
 # from support.threads import ProtoWorkerThread
