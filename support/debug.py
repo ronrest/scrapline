@@ -15,6 +15,14 @@ logger = logging.getLogger('myscraper')
 # from . misc import str2file, timenow_str, timenow
 
 id2sig = {sig.value:sig.name for sig in list(signal.Signals)}
+logging_level_map = {
+        "debug": logging.DEBUG,
+        "info": logging.INFO,
+        "warning": logging.WARNING,
+        "error": logging.ERROR,
+        "critical": logging.CRITICAL,
+        }
+
 
 def pretty_error_str(msg="", dec=True):
     error_type = sys.exc_info()[0]
@@ -49,14 +57,6 @@ def configure_logging(logging_level="info", file=None, date_format="%Y-%m-%d %H:
     #       Currenlty hardcoding telergam as the only external library
     #  TODO: Take argument for name of current library.
     #        currently hardcodes it as "myscraper"
-    logging_level_map = {
-            "debug": logging.DEBUG,
-            "info": logging.INFO,
-            "warning": logging.WARNING,
-            "error": logging.ERROR,
-            "critical": logging.CRITICAL,
-            }
-
     logging.basicConfig(format='%(levelname)-8s %(asctime)s [%(name)s][%(threadName)s]:\n         %(message)s',
                         level=logging.WARNING,
                         filename=file,
