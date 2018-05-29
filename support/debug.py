@@ -15,6 +15,8 @@ logger = logging.getLogger('myscraper')
 # from . misc import str2file, timenow_str, timenow
 
 id2sig = {sig.value:sig.name for sig in list(signal.Signals)}
+sigmap = {sig.name:sig for sig in signal.Signals}
+
 logging_level_map = {
         "debug": logging.DEBUG,
         "info": logging.INFO,
@@ -70,8 +72,6 @@ def configure_logging(logging_level="info", file=None, date_format="%Y-%m-%d %H:
     logger.setLevel(logging_level_map.get(logging_level.lower()))
     return logger
 
-
-sigmap = {sig.name:sig for sig in signal.Signals}
 def sig_handler(sig_id=None, frame=None):
     print("OHHH SHIT! GOT A SYSTEM SIGNAL {}".format(sig_id))
     sys.exit(sig_id)
