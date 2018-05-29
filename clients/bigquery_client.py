@@ -102,14 +102,19 @@ class BQ_Client(object):
                                        table_id=self.table_id,
                                        project_id=self.google_project_id)
 
-    def connect_to_table(self, table_id=None):
-        if table_id is not None:
+    def connect_to_table(self, table_id=None, dataset_id=None, project_id=None):
+        if table_id is None:
             self.table_id = table_id
+        if dataset_id is None:
+            dataset_id = self.dataset_id
+        if project_id is None:
+            project_id = self.google_project_id
 
         self.table = get_bigquery_table(self.client,
-                                    dataset_id=self.dataset_id,
-                                    table_id=self.table_id,
-                                    project_id=self.google_project_id)
+                                    dataset_id=dataset_id,
+                                    table_id=table_id,
+                                    project_id=project_id)
+
 
     def create_table(self, table_id, schema):
         """ Creates a new table in Big Query"""
