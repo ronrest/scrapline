@@ -34,11 +34,15 @@ def str2datetime(t, format="%Y-%m-%d %H:%M:%S", tz="Australia/Melbourne"):
     dt = datetime.datetime.strptime(t, format).replace(tzinfo=tzinfo)
     return dt
 
-def str2timestamp(t, format="%Y-%m-%d %H:%M:%S", tz="Australia/Melbourne"):
+def str2timestamp(t, format="%Y-%m-%d %H:%M:%S", tz="Australia/Melbourne", asint=True):
+    """ if asint is true, then it forces the returned value to be an integer """
     tzinfo = dateutil.tz.gettz(tz)
     assert tzinfo is not None, "Could not get timezone data"
     dt = datetime.datetime.strptime(t, format).replace(tzinfo=tzinfo)
-    return dt.timestamp()
+    ts = dt.timestamp()
+    if asint:
+        ts = int(ts)
+    return ts
 
 def now_datetime(tz="Australia/Melbourne"):
     tzinfo = dateutil.tz.gettz(tz)
